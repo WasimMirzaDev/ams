@@ -15,6 +15,7 @@ use App\Models\TenantUnit;
 use App\Models\Challan;
 use App\Models\ChallanDetail;
 use App\Models\Receiving;
+use App\Models\Movedout;
 
 use Validator;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +36,7 @@ $total_tenants   = Tenant::count();
      SELECT t.id, b.name AS building_name, u.name AS unit_name, t.name, t.*
       FROM tenants as t
       LEFT OUTER JOIN tenant_units as tu on tu.tenant_id = t.id
-      LEFT OUTER JOIN units AS u ON t.id = tu.tenant_id 
+      LEFT OUTER JOIN units AS u ON t.id = tu.tenant_id
       LEFT OUTER JOIN buildings AS b ON b.id = u.building_id
       ORDER BY building_name, unit_name, t.name
       ");
@@ -43,7 +44,7 @@ $total_tenants   = Tenant::count();
   $tu = TenantUnit::pluck('unit_id');
   // dd($tu);
   $units = Unit::with('building')->whereNotIn('units.id', $tu)->orderBy('units.building_id', 'asc')->orderBy('units.name', 'asc')->get();
-  
+
   $fee_head = FeeHead::where('fh_active', 1)->get();
   // dd($fee_head);
   $next_number = Tenant::max('number')+1;
@@ -53,14 +54,14 @@ $total_tenants   = Tenant::count();
 }
 
 public function add_to_tenant(Request $request)
-{  
+{
     $total_tenants   = Tenant::count();
     $my_unit = $request->tenant_unit;
       $listx = DB::SELECT("
      SELECT t.id, b.name AS building_name, u.name AS unit_name, t.name, t.*
       FROM tenants as t
       LEFT OUTER JOIN tenant_units as tu on tu.tenant_id = t.id
-      LEFT OUTER JOIN units AS u ON t.id = tu.tenant_id 
+      LEFT OUTER JOIN units AS u ON t.id = tu.tenant_id
       LEFT OUTER JOIN buildings AS b ON b.id = u.building_id
       ORDER BY building_name, unit_name, t.name
       ");
@@ -68,7 +69,7 @@ public function add_to_tenant(Request $request)
   $tu = TenantUnit::pluck('unit_id');
   // dd($tu);
   $units = Unit::with('building')->whereNotIn('units.id', $tu)->orderBy('units.building_id', 'asc')->orderBy('units.name', 'asc')->get();
-  
+
   $fee_head = FeeHead::where('fh_active', 1)->get();
   // dd($fee_head);
   $next_number = Tenant::max('number')+1;
@@ -94,12 +95,12 @@ public function create()
  * @return \Illuminate\Http\Response
  */
 public function store(Request $request)
-{ 
+{
     // $validator = Validator::make($request->all(), [
     //   'name' => 'required',
     //   'number' => 'required|unique:tenants,number,' . $request->id
     // ]);
-    
+
     $validator = Validator::make($request->all(), [
       'name' => 'required'
     ]);
@@ -124,8 +125,8 @@ public function store(Request $request)
                           'id' => $request->id
                       ],
                       (array)$x);
- 
-                      
+
+
       if($tenant)
       {
         $tenant_id = $tenant->id;
@@ -215,7 +216,7 @@ public function store(Request $request)
             {
               if(!empty($request->fh_amount[$a]))
               {
-                  
+
                   if($request->pm_type[$a] == 'ot')
                   {
                       $challan   =   new Challan;
@@ -228,7 +229,7 @@ public function store(Request $request)
                          'remarks'   =>  'One Time Charges'
                        ];
                        $challan = $challan->create($ch);
-                       
+
                        if($challan)
                        {
                          $det = new ChallanDetail;
@@ -238,7 +239,7 @@ public function store(Request $request)
                          $det->save();
                        }
                     }
-                    else 
+                    else
                     {
                         $end = new EnrolmentD;
                         $end->enrolment_id = $en_id;
@@ -248,7 +249,7 @@ public function store(Request $request)
                         $end->last_voucher = $request->last_voucher[$a];
                         $end->start_date = date('Y-m-d', strtotime($request->start_date[$a]));
                         $end->save();
-                    } 
+                    }
               }
             }
           }
@@ -383,5 +384,22 @@ public function destroy($id)
       return response()->json(['success'=>1, 'msg'=>'Deleted Successfully!']);
     }
     return response()->json(['success'=>0, 'msg'=>'Error in deleting record!']);
+}
+
+public function moveout(Request $request)
+{
+  $unit_id = TenantUnit::where('tenant_id', $request->moveout_tenant)->pluck('unit_id')[0];
+
+  $deleted = TenantUnit::where('tenant_id', $request->moveout_tenant)->delete();
+  if($deleted)
+  {
+    $mv = new Movedout;
+    $mv->movingout_date = date('Y-m-d', strtotime($request->moveout_date));
+    $mv->reason = $request->reason;
+    $mv->unit_id = $unit_id;
+    $mv->tenant_id = $request->moveout_tenant;
+    $mv->save();
+  }
+  return redirect()->back();
 }
 }

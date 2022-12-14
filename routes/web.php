@@ -112,6 +112,7 @@ Route::prefix('rent-roll')->name('rent-roll.')->group(function (){
 });
 
 Route::post('/tenants/show', [App\Http\Controllers\TenantController::class, 'add_to_tenant'])->name('add_to_tenant.save');
+Route::post('/tenant/move-out', [App\Http\Controllers\TenantController::class, 'moveout'])->name('move_out_tenant');
 
 
 });

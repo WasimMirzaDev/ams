@@ -137,6 +137,7 @@
        <button type="button" name="button" class="btn btn-warning" onclick="get_payment_history()">Payment History</button>
        <button type="button" name="button" class="btn btn-primary">Recurring Charges</button>
        <button type="button" name="button" class="btn btn-danger">Lease</button>
+       <button type="button" name="button" class="btn btn-danger" onclick="move_out()">Move Out</button>
      </section>
 
      <section id="tab_content" class="container" style="margin-top:20px;">
@@ -205,11 +206,11 @@
          @if($r->tenant_name != 'Vacant')
          onclick="get_receivables({{$r->tenant_id}})"
          @endif
-         
+
          @if($r->tenant_name == 'Vacant')
          onclick="add_to_unit({{$r->unit_id}})"
          @endif
-         
+
           >
            <td>{{$loop->iteration}}</td>
            <td>
@@ -250,7 +251,7 @@
     <!-- Modal -->
   <div class="modal fade" id="addtounit" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -267,7 +268,7 @@
                             {{$t->name}}
                         </option>
                     @endforeach
-                @endif                
+                @endif
             </select>
 
            <input type="hidden" name="tenant_unit" id="tenant_unit" value="0" />
@@ -277,7 +278,34 @@
         </div>
         </form>
       </div>
-      
+
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="move_out_modal" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+      <!-- Modal content-->
+      <div class="modal-content modal-sm">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Are you sure?</h4>
+        </div>
+        <form method="post" action="{{route('move_out_tenant')}}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <div class="modal-body">
+            Moving Out Date: <input type="date" class="form-control" name="moveout_date" value="{{date('Y-m-d')}}">
+           <input type="hidden" name="moveout_tenant" id="moveout_tenant" value="0" />
+           <br>
+           <textarea name="reason" class="form-control" placeholder="Type Reason Here || Optional"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger" >Move Out</button>
+        </div>
+        </form>
+      </div>
+
     </div>
   </div>
 
@@ -357,6 +385,12 @@ function filter_tenant(){
       $(".overlay").hide();
     }
   });
+}
+
+function move_out()
+{
+  $("#moveout_tenant").val($("#my_tenant").val());
+  $("#move_out_modal").modal('show');
 }
 </script>
 @endsection
