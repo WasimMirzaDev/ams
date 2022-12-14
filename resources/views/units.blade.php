@@ -29,27 +29,79 @@ $route_prefix = "units.";
                    </ul>
                    <div class="tab-content">
                       <div id="add" class="tab-pane fade in active">
-                         <form id="dataForm1" class="smart-form" enctype="multipart/form-data" action="{{route($route_prefix.'save')}}">
+                        <br>
+                        <div class="container">
+                          @if (!empty($errors->any()))
+                          <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                              @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                              @endforeach
+                            </ul>
+                          </div>
+                          @endif
+
+                          @if ($message = Session::get('success'))
+                          <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                          </div>
+                          @endif
+                        </div>
+                        <!-- Modal -->
+                      <div class="modal fade" id="addaddressmodal" role="dialog">
+                        <div class="modal-dialog modal-sm">
+
+                          <!-- Modal content-->
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Add Address</h4>
+                            </div>
+                            <form class="" action="{{route('buildings.save_building')}}" method="post">
+                              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                           <div class="modal-body">
+                               <input type="text" class="form-control" name="address_name" value="" placeholder="Type Address Name">
+                           </div>
+                           <div class="modal-footer">
+                             <input type="submit" class="btn btn-primary" name="" value="Save">
+                           </div>
+                         </form>
+                          </div>
+
+                        </div>
+                      </div>
+
+                         <form method="post" id="dataForm1" class="smart-form" enctype="multipart/form-data" action="{{route($route_prefix.'save')}}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="hidden" name="id" value="0">
+                            <input type="hidden" name="id" value="{{!empty($r->id) ? $r->id : 0}}">
                             <input type="hidden" id="route_prefix" name="" value="{{url('units/')}}">
                             <div class="container">
                                <fieldset>
-                                 <div class="row" style="margin-top:5px;">
-                                   <section class="col col-3">
+                                 <div class="row" >
+                                   <section class="col col-4">
                                       <label for="building_id" class="label" style="font-weight:bold;">Address:</label>
-                                        <select class="form-control" name="building_id">
+                                        <select class="select2" name="building_id">
                                           <option value="">Select Address</option>
                                           @if(!empty($buildings))
                                             @foreach($buildings as $b)
-                                              <option value="{{$b->id}}">{{$b->name}}</option>
+                                              <option value="{{$b->id}}"  {{!empty($r->building_id) && $r->building_id == $b->id ? 'selected' : ''}}
+                                                @if(!empty(Session::get('selected_address')))
+                                                  @if(Session::get('selected_address') == $b->id)
+                                                    selected
+                                                  @endif
+                                                @endif
+                                                 >{{$b->name}}</option>
                                             @endforeach
                                           @endif
                                         </select>
                                    </section>
+                                   <div class="col-md-2">
+                                     <button type="button" class="btn btn-lg btn-primary" onclick="add_address()" name="button" style="margin-top:23px;padding:6px 16px;">Add New Address</button>
+                                   </div>
                                  </div>
                                   <div class="row" style="margin-top:5px;">
-                                    <section class="col col-3">
+                                    <section class="col col-3" style="display:none;">
                                        <label for="number" class="label" style="font-weight:bold;">Unit Number:</label>
                                        <label class="input"> <i class="icon-prepend fa fa-user"></i>
                                          <input type="text" name="number" id="number" value="{{$next_number}}" autocomplete="off" placeholder="Unit Number">
@@ -58,12 +110,12 @@ $route_prefix = "units.";
                                     <section class="col col-3">
                                       <label for="name" class="label" style="font-weight:bold;">Unit Name:</label>
                                       <label class="input"> <i class="icon-prepend fa fa-user"></i>
-                                        <input type="text" name="name" id="name" value="" autocomplete="off" placeholder="Unit Name">
+                                        <input type="text" name="name" id="name" value="{{!empty($r->id) ? $r->name : ''}}" autocomplete="off" placeholder="Unit Name">
                                       </label>
                                     </section>
                                   </div>
 
-                                  <div class="row">
+                                  <div class="row" style="display:none;">
                                     <section class="col col-2">
                                       <label class="input"> <i class="icon-prepend fa fa-dollar"></i>
                                         <input type="number" name="weekly_rent" value="" autocomplete="off" placeholder="Weekly Rent">
@@ -81,7 +133,7 @@ $route_prefix = "units.";
                                     </section>
                                   </div>
 
-                                  <div class="row" style="margin-top:5px;">
+                                  <div class="row" style="margin-top:5px;display:none;">
                                      <section class="col col-6">
                                        <label class="textarea">
                                          <textarea rows="3" name="description" id="description" placeholder="Description"></textarea>
@@ -91,7 +143,12 @@ $route_prefix = "units.";
                                </fieldset>
                             </div>
                             <footer>
-                               <button type="submit" onclick="save1()" id="save_btn" class="btn btn-success">
+                              @if(!empty($r->id))
+                              <a href="{{route('units.show')}}" class="btn btn-danger">
+                              Cancel
+                            </a>
+                            @endif
+                               <button type="submit" class="btn btn-success">
                                Save
                                </button>
                             </footer>
@@ -107,28 +164,13 @@ $route_prefix = "units.";
                                   <th class="hasinput">
                                      <input type="text" class="form-control" placeholder="" />
                                   </th>
-                                  <th class="hasinput">
-                                     <input class="form-control" placeholder="" type="text">
-                                  </th>
-                                  <th class="hasinput">
-                                     <input class="form-control" placeholder="" type="text">
-                                  </th>
-                                  <th class="hasinput">
-                                     <input class="form-control" placeholder="" type="text">
-                                  </th>
-                                  <th class="hasinput">
-                                     <input class="form-control" placeholder="" type="text">
                                   </th>
                                   <th></th>
                                   <th></th>
                                </tr>
                                <tr>
-                                  <th>Number</th>
-                                  <th>Name</th>
+                                  <th>Unit</th>
                                   <th>Address</th>
-                                  <th>Weekly Rent</th>
-                                  <th>Monthly Rent</th>
-                                  <th>Yearly Rent</th>
                                   <th>Edit</th>
                                   <th>Delete</th>
                                </tr>
@@ -139,13 +181,9 @@ $route_prefix = "units.";
                                  @endphp
                                  @foreach($list as $l)
                                  <tr id="row_{{$l->id}}">
-                                    <td>{{$l->number}}</td>
                                     <td>{{$l->name}}</td>
                                     <td>{{$l->building->name}}</td>
-                                    <td>{{$l->weekly_rent}}</td>
-                                    <td>{{$l->monthly_rent}}</td>
-                                    <td>{{$l->yearly_rent}}</td>
-                                    <td><button type="button" id="edit_{{$l->id}}" href="{{route($route_prefix.'edit')}}/{{$l->id}}"     class="btn btn-primary btn-xs" onclick="edit1({{$l->id}})"><i class="fa fa-edit"></i></button> </td>
+                                    <td><a type="button" id="edit_{{$l->id}}" href="{{route($route_prefix.'edit')}}/{{$l->id}}"     class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a> </td>
                                     <td><button type="button" id="delete_{{$l->id}}" href="{{route($route_prefix.'delete')}}/{{$l->id}}" class="btn btn-danger btn-xs"  onclick="del({{$l->id}})">X</button> </td>
                                  </tr>
                                  @endforeach
@@ -160,4 +198,11 @@ $route_prefix = "units.";
        </article>
     </div>
  </section>
+
+ <script type="text/javascript">
+   function add_address()
+   {
+     $("#addaddressmodal").modal('show');
+   }
+ </script>
 @endsection

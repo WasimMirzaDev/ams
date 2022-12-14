@@ -40,13 +40,14 @@ public function create()
  */
 public function store(Request $request)
 {
-    $validator = Validator::make($request->all(), [
-      'name' => 'required',
-    //   'number' => 'required|unique:units,number,' . $request->id,
-      'building_id' => 'required',
-    ]);
-
-    if ($validator->passes()) {
+  $request->validate([
+          'name' => 'required',
+          'building_id' => 'required'
+       ],
+       [
+          'name.required' => 'Unit name is required',
+          'building_id.required' => 'Address is required'
+      ]);
       $unit   =   unit::updateOrCreate(
                       [
                           'id' => $request->id
@@ -60,14 +61,8 @@ public function store(Request $request)
                         'description'    => $request->description,
                         'building_id'    => $request->building_id,
                       ]);
-      if($unit)
-      {
-        $b = array_merge($request->all(), ['building_name' => $unit->building->name]);
-        $b['id'] = $unit->id;
-        return response()->json(['success'=>1, 'msg'=>'Saved Successfully!', 'data' => $b]);
-      }
-    }
-    return response()->json(['success' => 0, 'msg'=>$validator->errors()->all()]);
+       return redirect()->route('units.show')
+                       ->with('success','Unit Added successfully.');
 }
 
 /**
@@ -89,8 +84,14 @@ public function show($id)
  */
 public function edit($id)
 {
-  $Unit = Unit::find($id);
-  return response()->json($Unit);
+  $list = Unit::all();
+  $buildings = Building::all();
+
+  $r = Unit::find($id);
+  // dd($Unit);
+  $next_number = $r->number;
+  return view('units', get_defined_vars());
+  // return response()->json($Unit);
 }
 
 /**

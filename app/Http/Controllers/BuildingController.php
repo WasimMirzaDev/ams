@@ -60,6 +60,24 @@ class BuildingController extends Controller
         return response()->json(['success' => 0, 'msg'=>$validator->errors()->all()]);
     }
 
+    public function save_building(request $request)
+    {
+      $request->validate([
+              'address_name' => 'required'
+           ],
+           [
+              'address_name.required' => 'Address Name is required'
+          ]);
+          $address =   Building::create(
+                          [
+                            'name'           => $request->address_name,
+                            'address'           => $request->address_name,
+                          ]
+                        );
+           return redirect()->route('units.show')
+                           ->with(['success'=>'Address Added successfully.', 'selected_address' => $address->id]);
+    }
+
     /**
      * Display the specified resource.
      *

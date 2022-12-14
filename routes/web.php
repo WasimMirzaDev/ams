@@ -35,6 +35,7 @@ Route::prefix('buildings')->name('buildings.')->group(function () {
     Route::get('/edit/{id?}', [App\Http\Controllers\BuildingController::class, 'edit'])->name('edit');
     Route::get('/delete/{id?}', [App\Http\Controllers\BuildingController::class, 'destroy'])->name('delete');
     Route::post('/save', [App\Http\Controllers\BuildingController::class, 'store'])->name('save');
+    Route::post('/save_building', [App\Http\Controllers\BuildingController::class, 'save_building'])->name('save_building');
 });
 
 
