@@ -7,7 +7,7 @@
    <body>
       <div class="container mt-5">
          <div class="panel panel-primary">
-            <div class="panel-heading"> 
+            <div class="panel-heading">
             </div>
             <div class="panel-body">
                @if ($message = Session::get('success'))
@@ -35,7 +35,9 @@
                      <div class="col-md-12">
                         <div class="col-md-6 form-group">
                            <label>Receiver Number:</label>
-                           <input type="text" name="receiver" class="form-control"/>
+                           <input type="text" name="receiver[]" class="form-control"/>
+                           <input type="text" name="receiver[]" class="form-control"/>
+                           <input type="text" name="receiver[]" class="form-control"/>
                         </div>
                         <div class="col-md-6 form-group">
                            <label>Message:</label>
