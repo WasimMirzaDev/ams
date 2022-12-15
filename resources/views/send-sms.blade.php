@@ -7,8 +7,7 @@
    <body>
       <div class="container mt-5">
          <div class="panel panel-primary">
-            <div class="panel-heading">
-               <h2>Laravel Twilio Send SMS Form - ScratchCode.io</h2>
+            <div class="panel-heading"> 
             </div>
             <div class="panel-body">
                @if ($message = Session::get('success'))
