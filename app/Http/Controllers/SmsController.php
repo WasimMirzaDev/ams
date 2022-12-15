@@ -25,10 +25,16 @@ class SmsController extends Controller
 
           $client = new Client($accountSid, $authToken);
 
-          $client->messages->create($request->receiver, [
+
+          $receivers = $request->receiver;
+          foreach($receivers as $r)
+          {
+            $client->messages->create($r, [
               'from' => $twilioNumber,
               'body' => $request->message
-          ]);
+            ]);
+          }
+
 
           return back()
           ->with('success','Sms has been successfully sent.');
