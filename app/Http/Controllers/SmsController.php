@@ -29,10 +29,13 @@ class SmsController extends Controller
           $receivers = $request->receiver;
           foreach($receivers as $r)
           {
-            $client->messages->create($r, [
-              'from' => $twilioNumber,
-              'body' => $request->message
-            ]);
+            if(!empty($r))
+            {
+              $client->messages->create($r, [
+                'from' => $twilioNumber,
+                'body' => $request->message
+              ]);
+            }
           }
 
 
