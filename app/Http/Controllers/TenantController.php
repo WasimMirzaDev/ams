@@ -32,14 +32,14 @@ public function index()
 
 $total_tenants   = Tenant::count();
 
-      $listx = DB::SELECT("
-     SELECT t.id, b.name AS building_name, u.name AS unit_name, t.name, t.*
-      FROM tenants as t
-      LEFT OUTER JOIN tenant_units as tu on tu.tenant_id = t.id
-      LEFT OUTER JOIN units AS u ON t.id = tu.tenant_id
-      LEFT OUTER JOIN buildings AS b ON b.id = u.building_id
-      ORDER BY building_name, unit_name, t.name
-      ");
+     //  $listx = DB::SELECT("
+     // SELECT t.id, b.name AS building_name, u.name AS unit_name, t.name, t.*
+     //  FROM tenants as t
+     //  LEFT OUTER JOIN tenant_units as tu on tu.tenant_id = t.id
+     //  LEFT OUTER JOIN units AS u ON t.id = tu.tenant_id
+     //  LEFT OUTER JOIN buildings AS b ON b.id = u.building_id
+     //  ORDER BY building_name, unit_name, t.name
+     //  ");
        $list = Tenant::all();
   $tu = TenantUnit::pluck('unit_id');
   // dd($tu);
@@ -57,14 +57,14 @@ public function add_to_tenant(Request $request)
 {
     $total_tenants   = Tenant::count();
     $my_unit = $request->tenant_unit;
-      $listx = DB::SELECT("
-     SELECT t.id, b.name AS building_name, u.name AS unit_name, t.name, t.*
-      FROM tenants as t
-      LEFT OUTER JOIN tenant_units as tu on tu.tenant_id = t.id
-      LEFT OUTER JOIN units AS u ON t.id = tu.tenant_id
-      LEFT OUTER JOIN buildings AS b ON b.id = u.building_id
-      ORDER BY building_name, unit_name, t.name
-      ");
+     //  $listx = DB::SELECT("
+     // SELECT t.id, b.name AS building_name, u.name AS unit_name, t.name, t.*
+     //  FROM tenants as t
+     //  LEFT OUTER JOIN tenant_units as tu on tu.tenant_id = t.id
+     //  LEFT OUTER JOIN units AS u ON t.id = tu.tenant_id
+     //  LEFT OUTER JOIN buildings AS b ON b.id = u.building_id
+     //  ORDER BY building_name, unit_name, t.name
+     //  ");
        $list = Tenant::all();
   $tu = TenantUnit::pluck('unit_id');
   // dd($tu);

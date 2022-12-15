@@ -32,18 +32,18 @@ label, .col {
         <input type="number" name="fh_amount[]" step="any" value="">
       </label>
   </td>
-  <td> 
+  <td>
     <select class="form-control" name="pm_type[]">
       @foreach($ps as $p)
         <option {{!empty($t->id) && $t->pm_type == $p->c_id ? 'selected' : '' }} value="{{$p->c_id}}">{{$p->name}}</option>
       @endforeach
-    </select>  
+    </select>
   </td>
   <td>
     <label class="input">
         <input autocomplete="off" type="date" value="{{date('d-m-Y')}}" name="start_date[]" class="" >
         <input type="hidden" name="last_voucher[]" value="0000-00-00">
-    </label> 
+    </label>
   </td>
   <td> &nbsp; <button type="button" class="btn btn-xs btn-danger" onclick="removeRow(this.parentElement.parentElement)" name="button">X</button> </td>
   </tr>
@@ -333,18 +333,18 @@ label, .col {
                                             <input type="number" name="fh_amount[]" step="any" value="{{$ed->amount}}">
                                           </label>
                                       </td>
-                                       <td> 
+                                       <td>
                                         <select class="form-control" name="pm_type[]">
                                           @foreach($ps as $p)
                                             <option {{!empty($ed->id) && $ed->pm_type == $p->c_id ? 'selected' : '' }} value="{{$p->c_id}}">{{$p->name}}</option>
                                           @endforeach
-                                        </select>  
+                                        </select>
                                       </td>
                                       <td>
                                         <label class="input">
                                             <input autocomplete="off" type="date" value="{{date('Y-m-d', strtotime($ed->start_date))}}" name="start_date[]" class="" >
                                             <input type="hidden" name="last_voucher[]" value="{{ $ed->last_voucher == '0000-00-00' ? '0000-00-00' : date('Y-m-d', strtotime($ed->last_voucher))}}">
-                                        </label> 
+                                        </label>
                                       </td>
                                       <td> &nbsp; <button type="button" class="btn btn-xs btn-danger" onclick="removeRow(this.parentElement.parentElement)" name="button">X</button> </td>
                                       </tr>
@@ -376,18 +376,18 @@ label, .col {
                                             <input type="number" name="fh_amount[]" step="any" value="">
                                           </label>
                                       </td>
-                                      <td> 
+                                      <td>
                                         <select class="form-control" name="pm_type[]">
                                           @foreach($ps as $p)
                                             <option {{!empty($t->id) && $t->pm_type == $p->c_id ? 'selected' : '' }} value="{{$p->c_id}}">{{$p->name}}</option>
                                           @endforeach
-                                        </select>  
+                                        </select>
                                       </td>
                                       <td>
                                         <label class="input">
                                             <input autocomplete="off" type="text" value="{{date('d-m-Y')}}" name="start_date[]" class="mydatepicker" >
                                             <input type="hidden" name="last_voucher[]" value="0000-00-00">
-                                        </label> 
+                                        </label>
                                       </td>
                                       <td> &nbsp; <button type="button" class="btn btn-xs btn-danger" onclick="removeRow(this.parentElement.parentElement)" name="button">X</button> </td>
                                       </tr>
@@ -503,7 +503,7 @@ label, .col {
 
    function addMoreExtra()
    {
-     $("#extras").append("<tr>"+$("#appendable_extra").html()+"</tr>"); 
+     $("#extras").append("<tr>"+$("#appendable_extra").html()+"</tr>");
    }
 
    function removeRow(tr)

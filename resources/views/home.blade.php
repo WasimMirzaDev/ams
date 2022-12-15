@@ -135,7 +135,7 @@
      <section class="container">
        <button type="button" name="button" class="btn btn-success" onclick="get_receivables()">New Payment</button>
        <button type="button" name="button" class="btn btn-warning" onclick="get_payment_history()">Payment History</button>
-       <button type="button" name="button" class="btn btn-primary">Recurring Charges</button>
+       <button type="button" name="button" class="btn btn-primary" onclick="goto_recurring()">Recurring Charges</button>
        <button type="button" name="button" class="btn btn-danger">Lease</button>
        <button type="button" name="button" class="btn btn-danger" onclick="move_out()">Move Out</button>
      </section>
@@ -391,6 +391,12 @@ function move_out()
 {
   $("#moveout_tenant").val($("#my_tenant").val());
   $("#move_out_modal").modal('show');
+}
+
+function goto_recurring()
+{
+  var tenant_id = $("#my_tenant").val();
+  window.location.href="{{route('tenants.edit')}}/"+tenant_id;
 }
 </script>
 @endsection
