@@ -11,12 +11,32 @@ class SmsController extends Controller
       return view('send-sms');
   }
 
-  public function sendMessage($message, $recipients)
+  public function sendMessage(Request $request)
   {
-      $account_sid = getenv("TWILIO_SID");
-      $auth_token = getenv("TWILIO_AUTH_TOKEN");
-      $twilio_number = getenv("TWILIO_NUMBER");
-      $client = new Client($account_sid, $auth_token);
-      $client->messages->create($recipients, ['from' => $twilio_number, 'body' => $message]);
+      $this->validate($request, [
+          'receiver' => 'required|max:15',
+          'message' => 'required|min:5|max:155',
+      ]);
+
+      try {
+          $accountSid = getenv("TWILIO_SID");
+          $authToken = getenv("TWILIO_TOKEN");
+          $twilioNumber = getenv("TWILIO_NUMBER");
+
+          $client = new Client($accountSid, $authToken);
+
+          $client->messages->create($request->receiver, [
+              'from' => $twilioNumber,
+              'body' => $request->message
+          ]);
+
+          return back()
+          ->with('success','Sms has been successfully sent.');
+
+      } catch (\Exception $e) {
+          dd($e->getMessage());
+          return back()
+          ->with('error', $e->getMessage());
+      }
   }
 }
