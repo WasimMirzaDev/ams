@@ -413,35 +413,11 @@ label, .col {
                       </div>
                       <div id="list" class="tab-pane fade">
                          <table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
-                            <thead>
-                               <tr>
-                                  <th class="hasinput">
-                                     <input type="text" class="form-control" placeholder="">
-                                  </th>
-                                  <th class="hasinput">
-                                     <input type="text" class="form-control" placeholder="" />
-                                  </th>
-                                  <th class="hasinput">
-                                     <input class="form-control" placeholder="" type="text">
-                                  </th>
-                                  <th class="hasinput">
-                                     <input class="form-control" placeholder="" type="text">
-                                  </th>
-                                  <th class="hasinput">
-                                     <input class="form-control" placeholder="" type="text">
-                                  </th>
-                                  <th class="hasinput">
-                                     <input class="form-control" placeholder="" type="text">
-                                  </th>
-                                  <th class="hasinput">
-                                     <input class="form-control" placeholder="" type="text">
-                                  </th>
-                                  <th></th>
-                                  <th></th>
-                               </tr>
+                            <thead> 
                                <tr>
                                   <th>Number</th>
                                   <th>Name</th>
+                                  <th>Address</th>
                                   <th>Identity</th>
                                   <th>Cell</th>
                                   <th>Country</th>
@@ -459,6 +435,7 @@ label, .col {
                                  <tr id="row_{{$l->id}}">
                                     <td>{{$l->number}}</td>
                                     <td>{{$l->name}}</td>
+                                    <td>{{$l->address}}</td>
                                     <td>{{$l->identity}}</td>
                                     <td>{{$l->cell}}</td>
                                     <td>{{$l->country}}</td>

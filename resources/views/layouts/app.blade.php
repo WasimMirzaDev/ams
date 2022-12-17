@@ -416,6 +416,10 @@
 						<a href="{{route('home')}}" title="User"><span class="menu-item-parent">Dashboard</span></a>
 					</li>
 
+					<li id="sms_menu">
+						<a href="{{route('get.sms.form')}}" title="User"><span class="menu-item-parent">Sms Management</span></a>
+					</li>
+
 					<li>
 						<a href="#" title="Setup"><i class="fa fa-lg fa-fw fa-cog"></i> <span class="menu-item-parent">Setup</span></a>
 						<ul>
@@ -511,6 +515,7 @@
 			<!-- MAIN CONTENT -->
 			<div id="content" style="background:white;">
 				<div class="overlay">
+					<i style="left:37%; position:fixed; top:55%; color:red; font-size:30px; font-weight:bold;">Pls wait while loading..!</i>
 			 <i class="fa fa-cog fa-spin" style="color:#000; font-size:30px; left:50%;position:fixed;top:50%;"></i>
 		 </div>
 

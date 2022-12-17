@@ -32,15 +32,16 @@ public function index()
 
 $total_tenants   = Tenant::count();
 
-     //  $listx = DB::SELECT("
-     // SELECT t.id, b.name AS building_name, u.name AS unit_name, t.name, t.*
-     //  FROM tenants as t
-     //  LEFT OUTER JOIN tenant_units as tu on tu.tenant_id = t.id
-     //  LEFT OUTER JOIN units AS u ON t.id = tu.tenant_id
-     //  LEFT OUTER JOIN buildings AS b ON b.id = u.building_id
-     //  ORDER BY building_name, unit_name, t.name
-     //  ");
-       $list = Tenant::all();
+      $list = DB::SELECT("
+     SELECT t.id, concat(b.name, ' ', u.name) as address, t.number, t.name, t.identity, t.cell, t.country, t.city, t.gender
+           FROM tenants as t
+           LEFT OUTER JOIN tenant_units as tu on tu.tenant_id = t.id
+           LEFT OUTER JOIN units AS u ON u.id = tu.unit_id
+           LEFT OUTER JOIN buildings AS b ON b.id = u.building_id
+           ORDER BY b.name, u.name, t.name;
+      ");
+      // dd($list);
+       // $list = Tenant::all();
   $tu = TenantUnit::pluck('unit_id');
   // dd($tu);
   $units = Unit::with('building')->whereNotIn('units.id', $tu)->orderBy('units.building_id', 'asc')->orderBy('units.name', 'asc')->get();
@@ -57,15 +58,15 @@ public function add_to_tenant(Request $request)
 {
     $total_tenants   = Tenant::count();
     $my_unit = $request->tenant_unit;
-     //  $listx = DB::SELECT("
-     // SELECT t.id, b.name AS building_name, u.name AS unit_name, t.name, t.*
-     //  FROM tenants as t
-     //  LEFT OUTER JOIN tenant_units as tu on tu.tenant_id = t.id
-     //  LEFT OUTER JOIN units AS u ON t.id = tu.tenant_id
-     //  LEFT OUTER JOIN buildings AS b ON b.id = u.building_id
-     //  ORDER BY building_name, unit_name, t.name
-     //  ");
-       $list = Tenant::all();
+    $list = DB::SELECT("
+   SELECT t.id, concat(b.name, ' ', u.name) as address, t.number, t.name, t.identity, t.cell, t.country, t.city, t.gender
+         FROM tenants as t
+         LEFT OUTER JOIN tenant_units as tu on tu.tenant_id = t.id
+         LEFT OUTER JOIN units AS u ON u.id = tu.unit_id
+         LEFT OUTER JOIN buildings AS b ON b.id = u.building_id
+         ORDER BY b.name, u.name, t.name;
+    ");
+       // $list = Tenant::all();
   $tu = TenantUnit::pluck('unit_id');
   // dd($tu);
   $units = Unit::with('building')->whereNotIn('units.id', $tu)->orderBy('units.building_id', 'asc')->orderBy('units.name', 'asc')->get();
@@ -402,4 +403,23 @@ public function moveout(Request $request)
   }
   return redirect()->back();
 }
+
+public function update_tenant(Request $request)
+{
+  $request->validate([
+          'cell' => 'required'
+       ],
+       [
+          'cell.required' => 'Cell number is required'
+      ]);
+      $message = "Error in updating";
+      $tenant = Tenant::where('id', $request->tenant_id)->update(['cell' => $request->cell, 'email' => $request->email]);
+      if($tenant)
+      {
+        $message = "Updated Successfully!";
+      }
+       return redirect()->route('get.sms.form')
+                       ->with('success',$message);
+}
+
 }

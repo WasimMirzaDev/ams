@@ -309,8 +309,7 @@
     </div>
   </div>
 
-</div>
-</div>
+</div> 
 
 <script type="text/javascript">
 function show_modal(tenant_name)

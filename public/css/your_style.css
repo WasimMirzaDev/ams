@@ -178,3 +178,13 @@ input[type=number] {
 .MessageBoxContainer {
     top:1% !important;
 }
+input[type='text'], input[type='email'],
+input[type='date'], input[type='number'],
+input[type='search'], select,
+textarea{
+  border: 1px solid lightgrey !important;
+}
+
+#datatable_fixed_column td, th{
+  padding:3px !important;
+}

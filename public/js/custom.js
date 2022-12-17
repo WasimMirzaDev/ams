@@ -10,6 +10,15 @@ $.ajaxSetup({
 	var otable = $('#datatable_fixed_column').DataTable(
 		{"pageLength": 25}
 );
+	var otable = $('#sms_datatable').DataTable({
+				scrollY: '50vh',
+        scrollCollapse: true,
+        paging: false,
+				'columnDefs': [ {
+		    'targets': [0], /* column index */
+		    'orderable': false, /* true or false */ 
+		 			}]
+			});
 $(".select2").select2();
 $(".select2").css("width", "100%");
 	// custom toolbar

@@ -85,6 +85,7 @@ Route::prefix('tenants')->name('tenants.')->group(function () {
     Route::get('/edit/{id?}', [App\Http\Controllers\TenantController::class, 'edit'])->name('edit');
     Route::get('/delete/{id?}', [App\Http\Controllers\TenantController::class, 'destroy'])->name('delete');
     Route::post('/save', [App\Http\Controllers\TenantController::class, 'store'])->name('save');
+    Route::post('/update-tenant', [App\Http\Controllers\TenantController::class, 'update_tenant'])->name('update_tenant');
     Route::get('/detail', [App\Http\Controllers\HomeController::class, 'tenant_detail']);
 });
 
