@@ -143,7 +143,7 @@ $route_prefix = "receivings.";
          </section>
          <section class="col col-md-8">
            <label class="input">
-             <input type="number" class="form-control" style="color:green; font-size:25px;" onkeyup="check_pending_amount()" name="amount" value="{{!empty($r->id) ? $r->amount : ($rem_amt > 0 ? $rem_amt : '')}}">
+             <input type="number" step="any" class="form-control" style="color:green; font-size:25px;" onkeyup="check_pending_amount()" name="amount" value="{{!empty($r->id) ? $r->amount : ($rem_amt > 0 ? $rem_amt : '')}}">
            </label>
          </section>
        </div>
