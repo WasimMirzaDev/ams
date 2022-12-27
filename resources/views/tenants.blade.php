@@ -69,7 +69,29 @@ label, .col {
                    </ul>
                    <div class="tab-content">
                       <div id="add" class="tab-pane fade in active">
-                         <form target="_blank" method="post" id="dataForm2" class="smart-form" enctype="multipart/form-data" action="{{route($route_prefix.'save')}}">
+
+                        <br>
+                        <div class="container">
+                          @if (!empty($errors->any()))
+                          <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                              @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                              @endforeach
+                            </ul>
+                          </div>
+                          @endif
+
+                          @if ($message = Session::get('success'))
+                          <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                          </div>
+                          @endif
+                        </div>
+
+
+                         <form method="post" id="dataForm2" class="smart-form" enctype="multipart/form-data" action="{{route($route_prefix.'save')}}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="id" value="{{!empty($t->id) ? $t->id : 0}}">
                             <input type="hidden" id="route_prefix" name="" value="{{url('tenants/')}}">
@@ -109,7 +131,27 @@ label, .col {
                                 </section>
                                 <section class="col col-6">
                                   <label class="input"> <i class="icon-prepend fa fa-phone"></i>
-                                    <input type="text" value="{{!empty($t->id) ? $t->cell : ''}}" name="cell" placeholder="Phone">
+                                    <input type="text" value="{{!empty($t->id) ? $t->cell : ''}}" name="cell" placeholder="Phone 1">
+                                  </label>
+                                </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-6">
+
+                                </section>
+                                <section class="col col-6">
+                                  <label class="input"> <i class="icon-prepend fa fa-phone"></i>
+                                    <input type="text" value="{{!empty($t->id) ? $t->cell2 : ''}}" name="cell2" placeholder="Phone 2">
+                                  </label>
+                                </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-6">
+
+                                </section>
+                                <section class="col col-6">
+                                  <label class="input"> <i class="icon-prepend fa fa-phone"></i>
+                                    <input type="text" value="{{!empty($t->id) ? $t->cell3 : ''}}" name="cell3" placeholder="Phone 3">
                                   </label>
                                 </section>
                               </div>
@@ -208,14 +250,14 @@ label, .col {
                                         <select class="select2" name="unit_id">
                                           @if(!empty($t->id))
 
-                                          <option value="">Select</option>
+                                          <option value="0">Select</option>
                                           @foreach($units as $u)
                                             <option {{$t->unit_id == $u->id ? 'selected' : ''}} value="{{$u->id}}">{{$u->building_name}}:{{$u->unit_name}}</option>
                                           @endforeach
 
                                           @else
 
-                                          <option value="">Select</option>
+                                          <option value="0">Select</option>
                                           @foreach($units as $u)
                                           <option {{!empty($my_unit) && $my_unit == $u->id ? 'selected' : ''}} value="{{$u->id}}">{{$u->building->name}}:{{$u->name}}</option>
                                           @endforeach
@@ -290,7 +332,7 @@ label, .col {
                                     </section>
                                   </div>
 
-                                  <div class="row">
+                                  <div class="row" style="display:none;">
                                     <section class="col col-md-6">
                                       Status
                                       <label class="input">
@@ -399,9 +441,13 @@ label, .col {
                               </div>
                             </fieldset>
                             <footer>
-                               <button type="submit"
+                               <!-- <button type="submit"
                                onclick="save2()"
                                 id="save_btn" class="btn btn-success">
+                               Save
+                               </button> -->
+                               <button type="submit"
+                                id="" class="btn btn-success">
                                Save
                                </button>
                                <a href="{{route('tenants.show')}}"
@@ -413,15 +459,14 @@ label, .col {
                       </div>
                       <div id="list" class="tab-pane fade">
                          <table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
-                            <thead> 
+                            <thead>
                                <tr>
                                   <th>Number</th>
                                   <th>Name</th>
                                   <th>Address</th>
-                                  <th>Identity</th>
                                   <th>Cell</th>
-                                  <th>Country</th>
-                                  <th>City</th>
+                                  <th>Cell 2</th>
+                                  <th>Cell 3</th>
                                   <th>Gender</th>
                                   <th>Edit</th>
                                   <th>Delete</th>
@@ -436,10 +481,9 @@ label, .col {
                                     <td>{{$l->number}}</td>
                                     <td>{{$l->name}}</td>
                                     <td>{{$l->address}}</td>
-                                    <td>{{$l->identity}}</td>
                                     <td>{{$l->cell}}</td>
-                                    <td>{{$l->country}}</td>
-                                    <td>{{$l->city}}</td>
+                                    <td>{{$l->cell2}}</td>
+                                    <td>{{$l->cell3}}</td>
                                     <td>{{$l->gender == 'm' ? 'Male' : 'Female'}}</td>
                                     <td><a id="edit_{{$l->id}}" href="{{route($route_prefix.'edit')}}/{{$l->id}}"     class="btn btn-primary btn-xs" ><i class="fa fa-edit"></i></a> </td>
                                     <td><button type="button" id="delete_{{$l->id}}" href="{{route($route_prefix.'delete')}}/{{$l->id}}" class="btn btn-danger btn-xs"  onclick="del({{$l->id}})">X</button> </td>

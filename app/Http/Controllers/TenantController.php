@@ -33,7 +33,7 @@ public function index()
 $total_tenants   = Tenant::count();
 
       $list = DB::SELECT("
-     SELECT t.id, concat(b.name, ' ', u.name) as address, t.number, t.name, t.identity, t.cell, t.country, t.city, t.gender
+     SELECT t.id, concat(b.name, ' ', u.name) as address, t.number, t.name, t.identity, t.cell, t.cell2, t.cell3, t.country, t.city, t.gender
            FROM tenants as t
            LEFT OUTER JOIN tenant_units as tu on tu.tenant_id = t.id
            LEFT OUTER JOIN units AS u ON u.id = tu.unit_id
@@ -102,13 +102,20 @@ public function store(Request $request)
     //   'number' => 'required|unique:tenants,number,' . $request->id
     // ]);
 
-    $validator = Validator::make($request->all(), [
-      'name' => 'required'
-    ]);
+    // $validator = Validator::make($request->all(), [
+    //   'name' => 'required'
+    // ]);
+
+    $request->validate([
+            'name' => 'required'
+         ],
+         [
+            'name.required' => 'Tenant Name is required'
+        ]);
     // dd($request->all());
 
     $building_id = Unit::where('id', $request->unit_id)->pluck('building_id')->first();
-
+    $building_id = empty($building_id) ? 0 : $building_id;
     // dd($request->all());
     $x = $request->all();
     $x = (object)$x;
@@ -120,7 +127,7 @@ public function store(Request $request)
     $x->yearly_month_date = date('m-d', strtotime($x->yearly_month_date));
     $x->pm_type = "";
     //  dd((array)$x);
-    if ($validator->passes()) {
+    // if ($validator->passes()) {
       $tenant   =   tenant::updateOrCreate(
                       [
                           'id' => $request->id
@@ -258,18 +265,21 @@ public function store(Request $request)
 
         if($request->active == 1)
         {
-          $tu = TenantUnit::where([['tenant_id', '=', $tenant_id],['unit_id', '=', $request->unit_id]])->delete();
-          $check = TenantUnit::where('unit_id', '=', $request->unit_id)->first();
-          if(empty($check))
+          if(!empty($unit_id))
           {
-            $tu = new TenantUnit;
-            $tu->unit_id = $request->unit_id;
-            $tu->tenant_id = $tenant_id;
-            $tu->save();
-          }
-          else
-          {
-            return response()->json(['success' => 0, 'msg'=>['Sorry, This unit is already assigned to someone...']]);
+            $tu = TenantUnit::where([['tenant_id', '=', $tenant_id],['unit_id', '=', $request->unit_id]])->delete();
+            $check = TenantUnit::where('unit_id', '=', $request->unit_id)->first();
+            if(empty($check))
+            {
+                $tu = new TenantUnit;
+                $tu->unit_id = $request->unit_id;
+                $tu->tenant_id = $tenant_id;
+                $tu->save();
+            }
+            else
+            {
+              return response()->json(['success' => 0, 'msg'=>['Sorry, This unit is already assigned to someone...']]);
+            }
           }
         }
         else
@@ -291,9 +301,11 @@ public function store(Request $request)
 
         $r = $request->all();
         $r['id'] = $tenant_id;
-        return response()->json(['success'=>1, 'msg'=>'Saved Successfully!', 'data' => $r]);
+        return redirect()->route('tenants.show')
+                        ->with('success','Saved Successfully!!');
+        // return response()->json(['success'=>1, 'msg'=>'Saved Successfully!', 'data' => $r]);
       }
-    }
+    // }
     // dd('wasim');
     return response()->json(['success' => 0, 'msg'=>$validator->errors()->all()]);
 }
