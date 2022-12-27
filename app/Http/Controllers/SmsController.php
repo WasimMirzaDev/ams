@@ -138,4 +138,4 @@ class SmsController extends Controller
       $list = $this->get_sms_history();
       return view('send-sms', get_defined_vars());
   }
-}
+}     
