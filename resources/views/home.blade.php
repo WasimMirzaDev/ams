@@ -26,7 +26,7 @@
         </select>
       </div>
       <div class="col col-md-6">
-        <input type="text" name="tenant_name" class="form-control" value="" placeholder='Search Tenant Name' style="border:1px solid grey;">
+        <input type="text" name="tenant_name" class="form-control" value="" placeholder='Search Resident / Address' style="border:1px solid grey;">
       </div>
     </div>
     <div class="row" style="margin-top:10px;">
@@ -309,7 +309,7 @@
     </div>
   </div>
 
-</div> 
+</div>
 
 <script type="text/javascript">
 function show_modal(tenant_name)

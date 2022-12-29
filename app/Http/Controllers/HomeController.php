@@ -31,7 +31,7 @@ class HomeController extends Controller
       $total_units     = Unit::count();
       $total_tenants   = Tenant::count();
       $tenants = DB::SELECT("select * from tenants where id not in (select tenant_id from tenant_units)");
-      
+
       $rd = DB::SELECT("
       SELECT u.id as unit_id, t.id as tenant_id, b.name AS building_name, u.name AS unit_name, IFNULL(t.name, 'Vacant') AS tenant_name, ifnull(rem_amt, 0) as rent
       FROM units AS u
@@ -55,7 +55,7 @@ class HomeController extends Controller
     }
     public function tenant_detail(Request $request)
     {
-      $name_condition = !empty($request->tenant_name) ? " AND t.name like '%$request->tenant_name%' " : "";
+      $name_condition = !empty($request->tenant_name) ? " AND t.name like '%$request->tenant_name%' or b.name like '%$request->tenant_name%' " : "";
       $rd = DB::SELECT("
       SELECT u.id as unit_id, t.id as tenant_id, b.name AS building_name, u.name AS unit_name, IFNULL(t.name, 'Vacant') AS tenant_name, ifnull(rem_amt, 0) as rent
       FROM units AS u
@@ -78,7 +78,7 @@ class HomeController extends Controller
           ");
           return view('home-content.tenant-detail', get_defined_vars());
         }
-        
+
     public function add_to_tenant(Request $request)
     {
         // $tu = new TenantUnit;
@@ -88,10 +88,10 @@ class HomeController extends Controller
         // Tenant::where('id', $request->tenant_tenant)->update(['unit_id'=>$request->tenant_unit]);
         // return redirect()->route('home')
         //               ->with('success',[]);
-       
-       
-       
-       
-   
+
+
+
+
+
     }
 }
