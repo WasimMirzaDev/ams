@@ -59,7 +59,7 @@ public function add_to_tenant(Request $request)
     $total_tenants   = Tenant::count();
     $my_unit = $request->tenant_unit;
     $list = DB::SELECT("
-   SELECT t.id, concat(b.name, ' ', u.name) as address, t.number, t.name, t.identity, t.cell, t.country, t.city, t.gender
+   SELECT t.id, concat(b.name, ' ', u.name) as address, t.number, t.name, t.identity, t.cell, t.cell2, t.cell3, t.country, t.city, t.gender
          FROM tenants as t
          LEFT OUTER JOIN tenant_units as tu on tu.tenant_id = t.id
          LEFT OUTER JOIN units AS u ON u.id = tu.unit_id
