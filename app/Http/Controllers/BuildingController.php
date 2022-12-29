@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Building;
+use App\Models\Unit;
 class BuildingController extends Controller
 {
     /**
@@ -121,11 +122,18 @@ class BuildingController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = Building::find($id)->delete();
-        if($deleted)
+        $total_units = Unit::where('building_id', $id)->count();
+        if($total_units > 0)
         {
-          return response()->json(['success'=>1, 'msg'=>'Deleted Successfully!']);
+          return response()->json(['success'=>0, 'msg'=>'Warning! You must delete the Units inside this Address first.']);
         }
-        return response()->json(['success'=>0, 'msg'=>'Error in deleting record!']);
+        else {
+          $deleted = Building::find($id)->delete();
+          if($deleted)
+          {
+            return response()->json(['success'=>1, 'msg'=>'Deleted Successfully!']);
+          }
+        }
+        return response()->json(['success'=>0, 'msg'=>'Error in deleting record! ']);
     }
 }

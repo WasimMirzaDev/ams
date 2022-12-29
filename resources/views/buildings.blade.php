@@ -111,7 +111,7 @@ $route_prefix = "buildings.";
                                <tr id="row_{{$l->id}}">
                                   <td>{{$l->name}}</td>
                                   <td>{{$l->address}}</td>
-                                  <td>{{$l->units}}</td>
+                                  <td>{{count($l->total_units)}}</td>
                                   <td><button type="button" id="edit_{{$l->id}}" href="{{route($route_prefix.'edit')}}/{{$l->id}}"     class="btn btn-primary btn-xs" onclick="edit({{$l->id}})"><i class="fa fa-edit"></i></button> </td>
                                   <td><button type="button" id="delete_{{$l->id}}" href="{{route($route_prefix.'delete')}}/{{$l->id}}" class="btn btn-danger btn-xs"  onclick="del({{$l->id}})">X</button></td>
                                </tr>

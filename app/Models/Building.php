@@ -15,4 +15,9 @@ class Building extends Model
     {
         return $this->hasMany(Unit::class);
     }
+
+    public function total_units()
+    {
+        return $this->hasMany(Unit::class);
+    }
 }
