@@ -265,7 +265,7 @@ public function store(Request $request)
 
         if($request->active == 1)
         {
-          if(!empty($unit_id))
+          if(!empty($request->unit_id))
           {
             $tu = TenantUnit::where([['tenant_id', '=', $tenant_id],['unit_id', '=', $request->unit_id]])->delete();
             $check = TenantUnit::where('unit_id', '=', $request->unit_id)->first();
