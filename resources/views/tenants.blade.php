@@ -271,7 +271,7 @@ label, .col {
                                     <section class="col col-6">
                                       Joining Date
                                       <label class="input">
-                                        <input autocomplete="off" type="text" value="{{date('d-m-Y')}}" name="joining_date" class="mydatepicker" >
+                                        <input type="date" autocomplete="off" type="text" value="{{date('Y-m-d')}}" name="joining_date">
                                       </label>
                                     </section>
                                   </div>
