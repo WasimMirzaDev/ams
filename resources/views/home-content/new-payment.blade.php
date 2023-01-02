@@ -38,7 +38,7 @@ $route_prefix = "receivings.";
           @endphp
           <tr style="background-color:{{$loop->iteration%2 == 0 ? 'lightgrey' : '' }}">
             <td>{{$loop->iteration}}</td>
-            <td>{{date('d-m-Y', strtotime($vch->date))}}</td>
+            <td>{{date('m-d-Y', strtotime($vch->date))}}</td>
             <td style="text-align:right;">{{$vch->id}}</td>
             <td style="text-align:right;">{{$vch->vch_total}}</td>
             <td style="text-align:right;">{{$vch->receiveable_amt}}</td>
@@ -89,7 +89,7 @@ $route_prefix = "receivings.";
          </section>
          <section class="col col-md-8">
            <label class="input">
-             <input type="text" class="form-control mydatepicker" autocomplete="off" name="date" value="{{(!empty($r->id)) ? date('d-m-Y', strtotime($r->date)) : date('d-m-Y')}}">
+             <input type="date" class="form-control" autocomplete="off" name="date" value="{{(!empty($r->id)) ? date('Y-m-d', strtotime($r->date)) : date('Y-m-d')}}">
            </label>
          </section>
        </div>

@@ -32,17 +32,17 @@ $route_prefix = "rent-roll.";
                             <section class="col col-3" style="color:black; font-weight:bold;">
                               From Date
                               <label class="input">
-                                <input type="text" class="mydatepicker" name="from_date" value="{{date('d-m-Y')}}">
+                                <input type="date" class="" name="from_date" value="{{date('Y-m-d')}}">
                               </label>
                             </section>
 
                             <section class="col col-3" style="color:black; font-weight:bold;">
                               To Date
                               <label class="input">
-                                <input type="text" class="mydatepicker" name="to_date" value="{{date('d-m-Y')}}">
+                                <input type="date" class="" name="to_date" value="{{date('Y-m-d')}}">
                               </label>
-                            </section> 
-                          </div> 
+                            </section>
+                          </div>
                           <div class="row">
                               <div class="col col-md-2">
                                   <input type="checkbox" id="apart" name="show_apartment" value="1" checked /> <label for="apart">Show Apartment</label>

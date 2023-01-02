@@ -56,24 +56,24 @@ tr:hover {
       id="row_{{$l->id}}"
        >
         <td>{{$l->id}}</td>
-        <td>{{!empty($l->date) ? date('d-m-Y', strtotime($l->date)) : ''}}</td>
+        <td>{{!empty($l->date) ? date('m-d-Y', strtotime($l->date)) : ''}}</td>
         <td>{{$l->pm}}</td>
         <td>{{$l->remarks}}</td>
         <td style="text-align:right;">{{$l->dr > 0 ? '$'.$l->dr : ''}}</td>
         <td style="text-align:right;">{{$l->cr > 0 ? '$'.$l->cr : ''}}</td>
         <td style="text-align:right;">{{($balance < 0 ? "($".abs($balance).")" : '$'.$balance)}}</td>
-        <td align="center"> 
-        
+        <td align="center">
+
         @if($loop->iteration > 1)
         <button type="button" class="btn btn-danger btn-xs"  id="delete_{{$l->id}}" onclick="del({{$l->id}})"
             @if($l->cr > 0 )
-                href="{{route('receivings.delete')}}/{{$l->id}}"        
+                href="{{route('receivings.delete')}}/{{$l->id}}"
             @endif
-            
+
             @if($l->dr > 0)
                 href="{{route('vouchers.delete')}}/{{$l->id}}"
             @endif
-        >X</button type="button"> 
+        >X</button type="button">
         @endif
         </td>
       </tr>

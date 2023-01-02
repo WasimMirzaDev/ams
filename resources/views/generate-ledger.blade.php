@@ -32,14 +32,14 @@ $route_prefix = "ledger.";
                             <section class="col col-3" style="color:black; font-weight:bold;">
                               From Date
                               <label class="input">
-                                <input type="text" class="mydatepicker" name="from_date" value="{{date('d-m-Y')}}">
+                                <input type="date" class="" name="from_date" value="{{date('Y-m-d')}}">
                               </label>
                             </section>
 
                             <section class="col col-3" style="color:black; font-weight:bold;">
                               To Date
                               <label class="input">
-                                <input type="text" class="mydatepicker" name="to_date" value="{{date('d-m-Y')}}">
+                                <input type="date" class="" name="to_date" value="{{date('Y-m-d')}}">
                               </label>
                             </section>
                           </div>

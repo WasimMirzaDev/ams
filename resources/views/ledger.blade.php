@@ -42,7 +42,7 @@ tr:hover {
       "
        >
         <td>{{$l->id}}</td>
-        <td>{{!empty($l->date) ? date('d-m-Y', strtotime($l->date)) : ''}}</td>
+        <td>{{!empty($l->date) ? date('m-d-Y', strtotime($l->date)) : ''}}</td>
         <td>{{$l->pm}}</td>
         <td>{{$l->remarks}}</td>
         <td>{{$l->dr > 0 ? '$'.$l->dr : ''}}</td>
