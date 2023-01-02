@@ -41,7 +41,7 @@ label, .col {
   </td>
   <td>
     <label class="input">
-        <input autocomplete="off" type="date" value="{{date('d-m-Y')}}" name="start_date[]" class="" >
+        <input autocomplete="off" type="date" value="{{date('Y-m-d')}}" name="start_date[]" class="" >
         <input type="hidden" name="last_voucher[]" value="0000-00-00">
     </label>
   </td>
@@ -271,7 +271,7 @@ label, .col {
                                     <section class="col col-6">
                                       Joining Date
                                       <label class="input">
-                                        <input type="date" autocomplete="off" type="text" value="{{date('Y-m-d')}}" name="joining_date">
+                                        <input type="date" autocomplete="off" type="text" value="{{!empty($t->id) ? date('Y-m-d', strtotime($t->joining_date)) : date('Y-m-d')}}" name="joining_date">
                                       </label>
                                     </section>
                                   </div>
@@ -384,7 +384,7 @@ label, .col {
                                       </td>
                                       <td>
                                         <label class="input">
-                                            <input autocomplete="off" type="date" value="{{date('Y-m-d', strtotime($ed->start_date))}}" name="start_date[]" class="" >
+                                            <input type="date" autocomplete="off" value="{{date('Y-m-d', strtotime($ed->start_date))}}" name="start_date[]" class="" >
                                             <input type="hidden" name="last_voucher[]" value="{{ $ed->last_voucher == '0000-00-00' ? '0000-00-00' : date('Y-m-d', strtotime($ed->last_voucher))}}">
                                         </label>
                                       </td>
@@ -427,7 +427,7 @@ label, .col {
                                       </td>
                                       <td>
                                         <label class="input">
-                                            <input autocomplete="off" type="text" value="{{date('d-m-Y')}}" name="start_date[]" class="mydatepicker" >
+                                            <input autocomplete="off" type="date" value="{{date('Y-m-d')}}" name="start_date[]" >
                                             <input type="hidden" name="last_voucher[]" value="0000-00-00">
                                         </label>
                                       </td>
