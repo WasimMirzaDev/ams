@@ -55,6 +55,6 @@ function add_rent()
               }
       }
   }
-  return "hello.............................................";
+  return true;
 }
 ?>
