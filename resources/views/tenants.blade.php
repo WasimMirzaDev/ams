@@ -41,7 +41,8 @@ label, .col {
   </td>
   <td>
     <label class="input">
-        <input autocomplete="off" type="date" value="{{date('Y-m-d')}}" name="start_date[]" class="" >
+        <input autocomplete="off" type="hidden" value="{{date('Y-m-d')}}" name="start_date[]" class="" >
+        <input autocomplete="off" type="date" value="{{date('Y-m-d')}}" name="next_voucher[]" class="" >
         <input type="hidden" name="last_voucher[]" value="0000-00-00">
     </label>
   </td>
@@ -353,7 +354,7 @@ label, .col {
                                         <td>Recurring Head</td>
                                         <td>Recurring Charges</td>
                                         <td>Recurring Type</td>
-                                        <td>Starting Date</td>
+                                        <td>Voucher Date</td>
                                         <td> <button type="button" onclick="addMoreExtra()" class="btn btn-info btn-xs" style="border:1px solid white; background-color:black;" name="button">Add More</button> </td>
                                       </tr>
                                     </thead>
@@ -384,7 +385,8 @@ label, .col {
                                       </td>
                                       <td>
                                         <label class="input">
-                                            <input type="date" autocomplete="off" value="{{date('Y-m-d', strtotime($ed->start_date))}}" name="start_date[]" class="" >
+                                            <input type="hidden" autocomplete="off" value="{{date('Y-m-d', strtotime($ed->start_date))}}" name="start_date[]" class="" >
+                                            <input type="date" autocomplete="off" value="{{date('Y-m-d', strtotime($ed->next_voucher))}}" name="next_voucher[]" class="" >
                                             <input type="hidden" name="last_voucher[]" value="{{ $ed->last_voucher == '0000-00-00' ? '0000-00-00' : date('Y-m-d', strtotime($ed->last_voucher))}}">
                                         </label>
                                       </td>
@@ -427,7 +429,8 @@ label, .col {
                                       </td>
                                       <td>
                                         <label class="input">
-                                            <input autocomplete="off" type="date" value="{{date('Y-m-d')}}" name="start_date[]" >
+                                            <input autocomplete="off" type="hidden" value="{{date('Y-m-d')}}" name="start_date[]" >
+                                            <input autocomplete="off" type="date" value="{{date('Y-m-d')}}" name="next_voucher[]" >
                                             <input type="hidden" name="last_voucher[]" value="0000-00-00">
                                         </label>
                                       </td>

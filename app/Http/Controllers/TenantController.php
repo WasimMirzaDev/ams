@@ -229,9 +229,9 @@ public function store(Request $request)
                   {
                       $challan   =   new Challan;
                        $ch = [
-                         'date'    => date('Y-m-d', strtotime($request->start_date[$a])),
-                         'i_date'    => date('Y-m-d', strtotime($request->start_date[$a])),
-                         'l_date'    => date('Y-m-d', strtotime($request->start_date[$a])),
+                         'date'    => date('Y-m-d', strtotime($request->next_voucher[$a])),
+                         'i_date'    => date('Y-m-d', strtotime($request->next_voucher[$a])),
+                         'l_date'    => date('Y-m-d', strtotime($request->next_voucher[$a])),
                          'tenant_id' => $tenant_id,
                          'unit_id'   => empty($request->unit_id) ? 0 : $request->unit_id,
                          'remarks'   =>  'One Time Charges'
@@ -255,6 +255,7 @@ public function store(Request $request)
                         $end->amount = $request->fh_amount[$a];
                         $end->pm_type = $request->pm_type[$a];
                         $end->last_voucher = $request->last_voucher[$a];
+                        $end->next_voucher = date('Y-m-d', strtotime($request->next_voucher[$a]));
                         $end->start_date = date('Y-m-d', strtotime($request->start_date[$a]));
                         $end->save();
                     }
