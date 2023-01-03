@@ -28,8 +28,6 @@ class TenantController extends Controller
  */
 public function index()
 {
-
-
 $total_tenants   = Tenant::count();
 
       $list = DB::SELECT("
@@ -302,6 +300,7 @@ public function store(Request $request)
 
         $r = $request->all();
         $r['id'] = $tenant_id;
+        $x = add_rent();
         return redirect()->route('tenants.show')
                         ->with('success','Saved Successfully!!');
         // return response()->json(['success'=>1, 'msg'=>'Saved Successfully!', 'data' => $r]);
