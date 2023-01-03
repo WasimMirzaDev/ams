@@ -11,9 +11,9 @@ tr:hover {
   <table width="100%" border="1" bordercolor="white">
     <thead style="position:sticky; top:0;">
       <tr style="background-color:skyblue;">
-        <td>Vch/Rct</td>
-        <td>Date</td>
+        <td>Cheque No.</td>
         <td>Method</td>
+        <td>Date</td>
         <td>Narration</td>
         <td>Dr</td>
         <td>Cr</td>
@@ -55,9 +55,9 @@ tr:hover {
       "
       id="row_{{$l->id}}"
        >
-        <td>{{$l->id}}</td>
-        <td>{{!empty($l->date) ? date('m-d-Y', strtotime($l->date)) : ''}}</td>
+        <td>{{$l->cheque_no}}</td>
         <td>{{$l->pm}}</td>
+        <td>{{!empty($l->date) ? date('m-d-Y', strtotime($l->date)) : ''}}</td>
         <td>{{$l->remarks}}</td>
         <td style="text-align:right;">{{$l->dr > 0 ? '$'.$l->dr : ''}}</td>
         <td style="text-align:right;">{{$l->cr > 0 ? '$'.$l->cr : ''}}</td>

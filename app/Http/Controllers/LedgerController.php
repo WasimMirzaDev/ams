@@ -27,7 +27,7 @@ class LedgerController extends Controller
       $from_date = date('Y-m-d', strtotime($request->from_date));
       $to_date = date('Y-m-d', strtotime($request->to_date));
       $ledger = DB::SELECT("
-      SELECT '' as created_at, '' as ord, '' as id, '' as date, '' as pm, 'Opening' as remarks, (CASE WHEN sum(amt) > 0 THEN sum(amt) ELSE '' END)  as dr, (CASE WHEN sum(amt) < 0 THEN ABS(sum(amt)) ELSE '' END) as cr
+      SELECT '' as created_at, '' as ord, '' as id, '' as date, '' as pm, 'Opening' as remarks, (CASE WHEN sum(amt) > 0 THEN sum(amt) ELSE '' END)  as dr, (CASE WHEN sum(amt) < 0 THEN ABS(sum(amt)) ELSE '' END) as cr, '' as cheque_no
       FROM (
       SELECT opening AS amt FROM tenants WHERE id = $tenant_id
 
@@ -43,14 +43,14 @@ class LedgerController extends Controller
 
 
       UNION ALL
-      SELECT c.created_at, 1 as ord, c.id, c.date, '' as pm, c.remarks, sum(cd.fh_amount) as dr, '' as cr
+      SELECT c.created_at, 1 as ord, c.id, c.date, '' as pm, c.remarks, sum(cd.fh_amount) as dr, '' as cr, '' as cheque_no
       FROM challans AS c
       INNER JOIN challan_details AS cd ON c.id = cd.challan_id
       WHERE c.tenant_id = $tenant_id AND c.date BETWEEN '$from_date' and '$to_date'
       GROUP BY c.created_at, c.id, c.date, c.date, c.remarks
 
       UNION ALL
-      SELECT r.created_at, 2 as ord, r.id, r.date, p.name as pm, r.remarks, '' dr, amount as cr
+      SELECT r.created_at, 2 as ord, r.id, r.date, p.name as pm, r.remarks, '' dr, amount as cr, cheque_no
       FROM receivings AS r
       LEFT OUTER JOIN payment_methods AS p ON p.id = r.pm_id
       WHERE r.tenant_id = $tenant_id AND r.date BETWEEN '$from_date' AND '$to_date'
