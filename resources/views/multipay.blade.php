@@ -34,7 +34,7 @@
            <th>Unit/Apartment</th>
            <th>Residential</th>
            <th>Head</th>
-           <th>Amount</th>
+           <th style="width:100px;">Amount</th>
            <th>E-Bill <br> Last Entry </th>
          </tr>
      @if(!empty($rd))
@@ -52,7 +52,7 @@
              </select>
              @endif
            </td>
-           <td><input type="number" step="any" name="" value="" onblur="save_ebill({{$r->tu_id}}, this.value)"> </td>
+           <td style="width:100px;"><input style="width:100px;" type="number" step="any" name="" value="" onblur="save_ebill({{$r->tu_id}}, this.value)"> </td>
            <td id="last_entry_{{$r->tu_id}}" style="color:green;">{{!empty($r->last_entry) ? date('m-d-Y', strtotime($r->last_entry)) : ''}}</td>
          </tr>
        @endforeach
