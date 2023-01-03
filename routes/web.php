@@ -113,6 +113,12 @@ Route::prefix('rent-roll')->name('rent-roll.')->group(function (){
     Route::post('/show', [App\Http\Controllers\RentRollController::class, 'show'])->name('show');
 });
 
+
+Route::prefix('multipay')->name('multipay.')->group(function (){
+    Route::get('/show', [App\Http\Controllers\MultipayController::class, 'index'])->name('show');
+    Route::post('/save', [App\Http\Controllers\MultipayController::class, 'store'])->name('save');
+});
+
 Route::post('/tenants/show', [App\Http\Controllers\TenantController::class, 'add_to_tenant'])->name('add_to_tenant.save');
 Route::post('/tenant/move-out', [App\Http\Controllers\TenantController::class, 'moveout'])->name('move_out_tenant');
 

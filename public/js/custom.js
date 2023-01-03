@@ -16,7 +16,7 @@ $.ajaxSetup({
         paging: false,
 				'columnDefs': [ {
 		    'targets': [0], /* column index */
-		    'orderable': false, /* true or false */ 
+		    'orderable': false, /* true or false */
 		 			}]
 			});
 $(".select2").select2();
@@ -563,7 +563,7 @@ function _error(msg)
 		content : "",
 		color : "#D85454",
 		iconSmall : "fa fa-times fa-2x fadeInRight animated",
-		timeout : 8000
+		timeout : 2000
 	});
 }
 function _success(msg)
@@ -573,7 +573,7 @@ function _success(msg)
 		content : "",
 		color : "#659265",
 		iconSmall : "fa fa-times fa-2x fadeInRight animated",
-		timeout : 8000
+		timeout : 2000
 	});
 }
 

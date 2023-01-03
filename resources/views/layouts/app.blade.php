@@ -415,7 +415,9 @@
 					<li>
 						<a href="{{route('home')}}" title="User"><span class="menu-item-parent">Dashboard</span></a>
 					</li>
-
+					<li>
+						<a href="{{route('multipay.show')}}" title="User"><span  class="menu-item-parent">Electric Bills</span></a>
+					</li>
 					<li id="sms_menu">
 						<a href="{{route('get.sms.form')}}" title="User"><span class="menu-item-parent">Sms Management</span></a>
 					</li>
@@ -424,7 +426,7 @@
 						<a href="#" title="Setup"><i class="fa fa-lg fa-fw fa-cog"></i> <span class="menu-item-parent">Setup</span></a>
 						<ul>
 							<li>
-								<a href="{{route('extras.show')}}" title="User"><span class="menu-item-parent">Receiving Types</span></a>
+								<a href="{{route('extras.show')}}" title="User"><span class="menu-item-parent">Add Recurring Types</span></a>
 							</li>
 							<li>
 								<a href="{{route('expensetypes.show')}}" title="User"><span class="menu-item-parent">Expense Types</span></a>

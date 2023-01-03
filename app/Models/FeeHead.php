@@ -9,5 +9,5 @@ class FeeHead extends Model
 {
     use HasFactory;
     protected $primaryKey = 'fh_id';
-    protected $guarded = ['fh_id', 'is_rent', 'is_advance'];
+    protected $guarded = ['fh_id', 'is_rent', 'is_advance', 'is_electricbill'];
 }

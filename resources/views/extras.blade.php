@@ -43,10 +43,10 @@ $route_prefix = "extras.";
                                       </label>
                                     </section>
 
-                                    <section class="col col-3">
+                                    <section class="col col-3" style="display:none;">
                                        <label for="number" class="label" style="font-weight:bold;">Amount:</label>
                                        <label class="input"> <i class="icon-prepend fa fa-user"></i>
-                                         <input type="text" name="fh_amount" id="number" value="{{!empty($extra->fh_amount) ? $extra->fh_amount: ''}}" autocomplete="off" placeholder="Amount">
+                                         <input type="text" name="fh_amount" id="number" value="{{!empty($extra->fh_amount) ? $extra->fh_amount: 0}}" autocomplete="off" placeholder="Amount" />
                                        </label>
                                     </section>
                                   </div>
@@ -57,7 +57,7 @@ $route_prefix = "extras.";
                                      <section class="col col-6">
 
                                        <label class="">
-                                          <input  type="checkbox" name="fh_active" value="1" {{!empty($extra->fh_active) ? 'checked': ''}} />Active
+                                          <input  type="checkbox" checked name="fh_active" value="1" {{!empty($extra->fh_active) ? 'checked': ''}} />Active
                                        </label>
                                      </section>
                                   </div>
