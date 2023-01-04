@@ -413,11 +413,11 @@ function send_sms()
       response = JSON.parse(response);
       if(response['success'] == 1)
       {
-        _success(response['msg']);
+        _success_msg(response['msg']);
       }
       else
       {
-        _error(response['msg']);
+        _error_msg(response['msg']);
       }
     }
   });

@@ -577,6 +577,27 @@ function _success(msg)
 	});
 }
 
+function _error_msg(msg)
+{
+	$.smallBox({
+		title : "<i>"+ msg +"</i>",
+		content : "",
+		color : "#D85454",
+		iconSmall : "fa fa-times fa-2x fadeInRight animated",
+		timeout : 8000
+	});
+}
+function _success_msg(msg)
+{
+	$.smallBox({
+		title : "<i>"+ msg +"</i>",
+		content : "",
+		color : "#659265",
+		iconSmall : "fa fa-times fa-2x fadeInRight animated",
+		timeout : 8000
+	});
+}
+
 function edit(id)
 {
 	$(".overlay").show();

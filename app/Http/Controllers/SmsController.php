@@ -151,14 +151,18 @@ class SmsController extends Controller
       $authToken = getenv("TWILIO_AUTH_TOKEN");
       $twilioNumber = getenv("TWILIO_NUMBER");
       $client = new Client($accountSid, $authToken);
-      $succ = $client->messages->create($request->cell_number, [
-        'from' => $twilioNumber,
-        'body' => $request->sms
-      ]);
-      if($succ)
-      {
+
+      try {
+        $succ = $client->messages->create($request->cell_number, [
+          'from' => $twilioNumber,
+          'body' => $request->sms
+        ]);
         $response['msg'] = "Sms sent successfully..!";
         $response['success'] = "1";
+      }
+      catch(\Exception $e)
+      {
+        $response['msg'] = $e->getMessage();
       }
     }
     return json_encode($response);
