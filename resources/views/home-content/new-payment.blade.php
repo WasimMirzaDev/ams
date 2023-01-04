@@ -157,9 +157,7 @@ $route_prefix = "receivings.";
       <div class="row">
         <br>
         <input id="cell_number" type="text" class="form-control" name="" value="{{$cell_number}}" placeholder="No cell Number Found">
-        <textarea id="sms" name="name" rows="3" class="form-control">Message from Fifth Avenue Dalton.
-          Payment of {{$last_amount}} usd received successfully.
-          Your remaining Balance is {{$rem_amt <= 0 ? number_format(abs($rem_amt), 2) : '('.number_format($rem_amt,2).')'}}. Thank You</textarea>
+        <textarea id="sms" name="name" rows="3" class="form-control">Message from Fifth Avenue Dalton. Payment of {{$last_amount}} usd received successfully. Your remaining Balance is {{$rem_amt <= 0 ? number_format(abs($rem_amt), 2) : '('.number_format($rem_amt,2).')'}}. Thank You</textarea>
         <button class="btn btn-primary btn-block" type="button"
         onclick="send_sms()"
         >Send SMS</button>
