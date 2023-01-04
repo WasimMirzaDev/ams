@@ -122,7 +122,7 @@
    <!-- The modal -->
    <div class="modal" id="action-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
    <div class="modal-dialog modal-lg" >
-   <div class="modal-content" style="height:90vh;">
+   <div class="modal-content" style="height:95vh; margin-top:-20px;">
 
    <div class="modal-header" style="background-color:#2196F3; color:white;">
    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -397,5 +397,31 @@ function goto_recurring()
   var tenant_id = $("#my_tenant").val();
   window.location.href="{{route('tenants.edit')}}/"+tenant_id;
 }
+
+function send_sms()
+{
+  $(".overlay").show();
+  var sms = $("#sms").val();
+  var cell_number = $("#cell_number").val();
+  $.ajax({
+    url: 'sms/send',
+    method: "post",
+    data: {sms:sms, cell_number:cell_number},
+    success: function(response)
+    {
+      $(".overlay").hide();
+      response = JSON.parse(response);
+      if(response['success'] == 1)
+      {
+        _success(response['msg']);
+      }
+      else
+      {
+        _error(response['msg']);
+      }
+    }
+  });
+}
+
 </script>
 @endsection

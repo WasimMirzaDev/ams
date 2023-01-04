@@ -32,6 +32,15 @@ class ReceivingController extends Controller
      return view('receivings', get_defined_vars());
   }
 
+  public function make_valid_number($string)
+  {
+   $country_code = getenv("COUNTRY_CODE");
+   $string = str_replace(' ', '', $string); // remove all spaces.
+   $string = str_replace('-', '', $string); // remove all hyphens
+   return $country_code.preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+  }
+
+
   public function get_receivables(Request $request)
   {
     $ra = DB::SELECT("
@@ -49,6 +58,16 @@ class ReceivingController extends Controller
     LEFT OUTER JOIN buildings AS b ON b.id = u.building_id
     WHERE (c_amt <> r_amt || r_amt IS NULL) AND c.tenant_id = $request->tenant_id
     ");
+
+    $last_amount = DB::SELECT("
+      SELECT r.amount FROM `receivings` as r where tenant_id = $request->tenant_id order by r.id desc limit 1
+    ")[0]->amount ?? 0;
+
+    $cell_number = DB::SELECT("
+      SELECT cell from tenants where id = $request->tenant_id
+    ")[0]->cell ?? '';
+    $cell_number = $this->make_valid_number($cell_number);
+
     if(!empty($request->home))
     {
       $create = $this->createv2($request);

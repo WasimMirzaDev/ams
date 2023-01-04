@@ -127,6 +127,7 @@ Route::post('/tenant/move-out', [App\Http\Controllers\TenantController::class, '
 
 Route::get('send-sms', [ App\Http\Controllers\SmsController::class, 'index' ])->name('get.sms.form');
 Route::post('send-sms', [ App\Http\Controllers\SmsController::class, 'sendMessage' ])->name('send.sms');
+Route::post('sms/send', [ App\Http\Controllers\SmsController::class, 'sendMessageByNumber' ]);
 
 
 Route::get('login', function () {

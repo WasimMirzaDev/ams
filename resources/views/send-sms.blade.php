@@ -39,8 +39,7 @@
                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
                      <div class="modal-body">
                         <input type="text" class="form-control" name="cell" value="" id="cell" placeholder="Enter Cell Number without (-)">
-                        <small style="color:red;">Number With country code</small>
-                        <br>
+                        <small style="color:red;"></small>
                         <input type="hidden" name="tenant_id" id="tenant_id" value="0" />
                         <br>
                          <input type="text" class="form-control" name="email" value="" id="email" placeholder="Add Email here...">

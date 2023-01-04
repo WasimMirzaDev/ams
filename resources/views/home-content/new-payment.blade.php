@@ -3,6 +3,9 @@
   input {
     border:1px solid gainsboro !important;
   }
+  #cell_number::placeholder{
+    color:red;
+  }
 </style>
 @php
 $route_prefix = "receivings.";
@@ -126,7 +129,7 @@ $route_prefix = "receivings.";
          </section>
          <section class="col col-md-8">
            <label class="textarea">
-             <textarea name="remarks" rows="3">{{(!empty($r->id)) ? $r->remarks : ''}}</textarea>
+             <textarea name="remarks" rows="2">{{(!empty($r->id)) ? $r->remarks : ''}}</textarea>
            </label>
          </section>
          <section class="col col-md-4">
@@ -151,6 +154,15 @@ $route_prefix = "receivings.";
        onclick="save_receiving_home()"
        id="save_btn">Save</button>
     </form>
-
+      <div class="row">
+        <br>
+        <input id="cell_number" type="text" class="form-control" name="" value="{{$cell_number}}" placeholder="No cell Number Found">
+        <textarea id="sms" name="name" rows="3" class="form-control">Message from Fifth Avenue Dalton.
+          Payment of {{$last_amount}} usd received successfully.
+          Your remaining Balance is {{$rem_amt <= 0 ? number_format(abs($rem_amt), 2) : '('.number_format($rem_amt,2).')'}}. Thank You</textarea>
+        <button class="btn btn-primary btn-block" type="button"
+        onclick="send_sms()"
+        >Send SMS</button>
+      </div>
   </section>
 </div>

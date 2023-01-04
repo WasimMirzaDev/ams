@@ -24,7 +24,7 @@ class SmsController extends Controller
        $accountSid,
        $authToken
    ]
-  ]); 
+  ]);
   return $bi = json_decode($response->getBody());
   }
 
@@ -137,6 +137,31 @@ class SmsController extends Controller
       $residents = $this->get_residents();
       $list = $this->get_sms_history();
       return view('send-sms', get_defined_vars());
+  }
+
+  public function sendMessageByNumber(Request $request)
+  {
+
+    $response['msg'] = 'Invalid Phone Number';
+    $response['success'] = 0;
+
+    if(!empty($request->cell_number))
+    {
+      $accountSid = getenv("TWILIO_SID");
+      $authToken = getenv("TWILIO_AUTH_TOKEN");
+      $twilioNumber = getenv("TWILIO_NUMBER");
+      $client = new Client($accountSid, $authToken);
+      $succ = $client->messages->create($request->cell_number, [
+        'from' => $twilioNumber,
+        'body' => $request->sms
+      ]);
+      if($succ)
+      {
+        $response['msg'] = "Sms sent successfully..!";
+        $response['success'] = "1";
+      }
+    }
+    return json_encode($response);
   }
 }
 // all done
