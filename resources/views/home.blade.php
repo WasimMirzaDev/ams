@@ -395,7 +395,11 @@ function move_out()
 function goto_recurring()
 {
   var tenant_id = $("#my_tenant").val();
-  window.location.href="{{route('tenants.edit')}}/"+tenant_id;
+  // window.location.href="{{route('tenants.edit')}}/"+tenant_id;
+  window.open(
+  "{{route('tenants.edit')}}/"+tenant_id,
+  '_blank' // <- This is what makes it open in a new window.
+);
 }
 
 function send_sms()
