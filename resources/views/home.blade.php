@@ -17,16 +17,23 @@
   <div class="container" style="width:60%; margin:0 auto;">
     <div class="row">
       <div class="col col-md-6">
-        <select class="select2" name="tenant_type">
+        <select class="select2" name="tenant_type" onchange="show_amount(this.value)">
           <option value="">All</option>
           <option value="AND rem_amt>0">Debitor</option>
           <option value="AND rem_amt<0">Creditor</option>
           <option value="AND rem_amt = 0">0 Balance</option>
           <option value="AND t.name is null">Vacant</option>
+          <option value="AND rem_amt >=">Greater than and equals to</option>
+          <option value="AND rem_amt <=">Less than and equals to</option>
         </select>
       </div>
       <div class="col col-md-6">
         <input type="text" name="tenant_name" class="form-control" value="" placeholder='Search Resident / Address' style="border:1px solid grey;">
+      </div>
+    </div>
+    <div class="row" style="margin-top:5px;display:none;" id="search_amount">
+      <div class="col col-md-6">
+        <input type="number" step="any" class="form-control" name="" value="" id="filter_amount" placeholder="Enter Amount">
       </div>
     </div>
     <div class="row" style="margin-top:10px;">
@@ -371,9 +378,25 @@ function get_payment_history()
     }
   });
 }
+
+function show_amount(myval)
+{
+  $("#search_amount").hide();
+  if(myval == 'AND rem_amt >=' || myval == 'AND rem_amt <=')
+  {
+    $("#search_amount").show();
+    $("#search_amount").focus();
+  }
+}
+
 function filter_tenant(){
   $(".overlay").show();
   var tenant_type = $("select[name=tenant_type] option:selected").val();
+  var filter_amount = $("#filter_amount").val() || 0;
+  if(tenant_type == 'AND rem_amt >=' || tenant_type == 'AND rem_amt <=')
+  {
+    tenant_type = tenant_type + ' '+filter_amount;
+  }
   var tenant_name = $("input[name=tenant_name]").val();
   $.ajax({
     url: 'tenants/detail',
