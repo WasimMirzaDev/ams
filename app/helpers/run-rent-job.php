@@ -13,6 +13,10 @@ function add_rent()
   $p  = '#*2NnFVwmwMh';
 
   $con = mysqli_connect('localhost', $u, $p, $db);
+  
+    mysqli_query($con, "update `payment_schedules` set no_days = (SELECT DAY(LAST_DAY(CURRENT_DATE())) AS Number_of_Days) where c_id = 'm'");
+    
+    
   $query = "
   SELECT ed.id as end_id, tu.tenant_id, tu.unit_id, ed.fh_id, ed.amount, ed.last_voucher, ed.start_date, datediff(curdate(), ed.start_date) as diff, ps.no_days,
   substring_index(format(datediff(curdate(), ed.start_date) / ps.no_days, 1), '.', -1) as reminder, ed.next_voucher,
