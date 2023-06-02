@@ -25,6 +25,7 @@
           <option value="AND t.name is null">Vacant</option>
           <option value="AND rem_amt >=">Greater than and equals to</option>
           <option value="AND rem_amt <=">Less than and equals to</option>
+          <option value="defaulter">Not Paid From days</option>
         </select>
       </div>
       <div class="col col-md-6">

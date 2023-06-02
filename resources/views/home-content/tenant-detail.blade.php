@@ -54,7 +54,7 @@ $prev_building="...";
     @if($r->tenant_name != 'Vacant')
     onclick="get_receivables({{$r->tenant_id}})"
     @endif
-    
+
     @if($r->tenant_name == 'Vacant')
          onclick="add_to_unit({{$r->unit_id}})"
     @endif

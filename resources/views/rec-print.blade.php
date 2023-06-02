@@ -22,9 +22,7 @@ body { margin: 0px; }
     <center>
         <b style="font-size:18px;">Payment Receipt</b>
     </center>
-    Rct #
-<b>{{$rct_no}}</b>
-<br>
+
 <span style="font-size:12px;">{{$address}}, Unit: {{$unit}}</span>
 <fieldset>
   <table width="100%" border="0">
@@ -41,7 +39,7 @@ body { margin: 0px; }
         <br>
             Received From: <b>{{$customer}}</b>
             <br>
-            Payment Method: <b>{{$pm_name}}</b>
+            Payment Method: <b>{{$pm_name}} {{!empty($cheque_no) ? '('.$cheque_no.')' : ''}}</b>
             <br>
             @if ($pending_amt > 0)
                 Balance Due: <b>(${{$pending_amt}})</b>

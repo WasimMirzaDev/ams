@@ -18,8 +18,8 @@
           @endphp
         @if(!empty($show_apartment)) @php $colspan = $colspan + 1 @endphp <td>Apartment</td> @endif
         @if(!empty($show_resident)) @php $colspan = $colspan + 1 @endphp <td>Residential</td> @endif
-        <td>Date</td>
         <td>Amount</td>
+        <td>Date</td>
       </tr>
     </thead>
     <tbody>
@@ -33,10 +33,10 @@
       @endif
       "
        >
-        @if(!empty($show_apartment)) <td>{{$l->building_name}} ({{$l->unit_name}})</td> @endif
+        @if(!empty($show_apartment)) <td> {{$l->unit_name}} ({{$l->building_name}})</td> @endif
         @if(!empty($show_resident)) <td>{{$l->tenant_name}}</td> @endif
-        <td>{{!empty($l->date) ? date('m-d-Y', strtotime($l->date)) : ''}}</td>
-        <td style="text-align:right;">{{$l->amount}}</td>
+        <td style="text-align:right;font-weight:bold;">{{$l->amount}}</td>
+        <td style="text-align:center;">{{!empty($l->date) ? date('m-d-Y', strtotime($l->date)) : ''}}</td>
       </tr>
       @php
         $total += $l->amount;
@@ -45,7 +45,9 @@
 
   @endif
       <tr style="background-color:skyblue;">
+        @if($colspan > 0)
         <td colspan="{{$colspan}}"></td>
+        @endif
         <td align="right" style="font-size:20px; font-weight:bold;">{{$total}}</td>
       </tr>
   </tbody>

@@ -66,7 +66,7 @@
     </div>
     <section class="col col-md-5" style="{{!empty($r->id) && $r->pm->is_cash == 0 ? 'display:block;' : 'display:none' }}"  id="cheque_no">
       <label class="input">
-        <input type="text" class="form-control" name="cheque_no" placeholder="Bank/Cheque Number" value="{{!empty($r->id) ? $r->cheque_no : '' }}">
+        <input type="text" class="form-control" name="cheque_no" placeholder="Bank/Cheque/Money Order" value="{{!empty($r->id) ? $r->cheque_no : '' }}">
       </label>
     </section>
   </div>

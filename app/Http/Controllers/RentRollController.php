@@ -11,26 +11,38 @@ class RentRollController extends Controller
 {
     public function create()
     {
-  
+
     }
-    
+
     public function generate()
     {
         return view('rent-roll-generate', get_defined_vars());
     }
 
     public function show(Request $request)
-    { 
+    {
       $from_date = date('Y-m-d', strtotime($request->from_date));
       $to_date = date('Y-m-d', strtotime($request->to_date));
+      // $ledger = DB::SELECT("
+      //  SELECT  b.name as building_name, u.name as unit_name, t.name as tenant_name, date, amount FROM receivings as r
+      //   INNER join units as u ON u.id = r.unit_id
+      //   INNER join tenants as t on t.id = r.tenant_id
+      //   left outer join buildings as b ON b.id = u.building_id
+      //   WHERE r.date BETWEEN '$from_date' AND '$to_date'
+      //   order by r.date
+      // ");
+
       $ledger = DB::SELECT("
-       SELECT  b.name as building_name, u.name as unit_name, t.name as tenant_name, date, amount FROM receivings as r 
+       SELECT  b.name as building_name, u.name as unit_name, t.name as tenant_name, sum(amount) as amount, date FROM receivings as r
         INNER join units as u ON u.id = r.unit_id
         INNER join tenants as t on t.id = r.tenant_id
         left outer join buildings as b ON b.id = u.building_id
         WHERE r.date BETWEEN '$from_date' AND '$to_date'
+        GROUP BY b.name, u.name, t.name, date
         order by r.date
-      "); 
+      ");
+
+
       $show_apartment = $request->show_apartment;
       $show_resident = $request->show_resident;
       return view('rent-roll', get_defined_vars());

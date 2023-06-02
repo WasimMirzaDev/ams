@@ -374,7 +374,7 @@ class ReceivingController extends Controller
     //                     WHERE challan_id = $vch_id"
                             // );
      $rd = DB::select("
-        SELECT pm.name as pm_name, a.name as address_name, u.name as unit_name, t.name as tenant_name, r.date as rct_date, r.amount as rct_amt, r.remarks
+        SELECT r.cheque_no, pm.name as pm_name, a.name as address_name, u.name as unit_name, t.name as tenant_name, r.date as rct_date, r.amount as rct_amt, r.remarks
             FROM receivings AS r
             LEFT OUTER JOIN tenants AS t ON t.id = r.tenant_id
             LEFT OUTER JOIN units AS u ON u.id = r.unit_id
@@ -408,7 +408,8 @@ class ReceivingController extends Controller
         'rct_no'    => $id,
         'vch_id'    => $vch_id,
         'pm_name'   => $rd->pm_name,
-        'remarks'   => $rd->remarks
+        'remarks'   => $rd->remarks,
+        'cheque_no' => $rd->cheque_no
         ];
 
     $pdf = PDF::loadView('rec-print', $data);

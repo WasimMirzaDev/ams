@@ -11,9 +11,9 @@ tr:hover {
   <table width="100%" border="1" bordercolor="white">
     <thead style="position:sticky; top:0;">
       <tr style="background-color:skyblue;">
-        <td>Cheque No.</td>
-        <td>Method</td>
         <td>Date</td>
+        <td>Method</td>
+        <td>Cheque No.</td>
         <td>Narration</td>
         <td>Dr</td>
         <td>Cr</td>
@@ -55,15 +55,25 @@ tr:hover {
       "
       id="row_{{$l->id}}"
        >
-        <td>{{$l->cheque_no}}</td>
+       <td>{{!empty($l->date) ? date('m-d-Y', strtotime($l->date)) : ''}}</td>
         <td>{{$l->pm}}</td>
-        <td>{{!empty($l->date) ? date('m-d-Y', strtotime($l->date)) : ''}}</td>
+        <td>{{$l->cheque_no}}</td>
         <td>{{$l->remarks}}</td>
         <td style="text-align:right;">{{$l->dr > 0 ? '$'.$l->dr : ''}}</td>
         <td style="text-align:right;">{{$l->cr > 0 ? '$'.$l->cr : ''}}</td>
-        <td style="text-align:right;">{{($balance < 0 ? "($".abs($balance).")" : '$'.$balance)}}</td>
+        @if($balance == 0)
+        <td></td>
+          @else
+          <td style="text-align:right; {{($balance < 0 ? 'color:blue;' : 'color:red;')}}">{{($balance < 0 ? "($".abs($balance).")" : '$'.$balance)}}</td>
+        @endif
+        <td>
+          @if($loop->iteration > 1)
+            @if($l->cr > 0)
+          <a href="receivings/print/{{$l->id}}" target="_blank">Print</a>
+            @endif
+          @endif
+        </td>
         <td align="center">
-
         @if($loop->iteration > 1)
         <button type="button" class="btn btn-danger btn-xs"  id="delete_{{$l->id}}" onclick="del({{$l->id}})"
             @if($l->cr > 0 )
@@ -84,7 +94,11 @@ tr:hover {
         <td colspan="4"></td>
         <td style="text-align:right;">${{$total_dr}}</td>
         <td style="text-align:right;">${{$total_cr}}</td>
-        <td style="text-align:right;">{{($balance < 0 ? "($".abs($balance).")" : '$'.$balance)}}</td>
+        @if($balance == 0)
+        <td style="text-align:right;">0</td>
+          @else
+          <td style="text-align:right; {{$balance < 0 ? 'color:blue;' : 'color:red;'}}">{{($balance < 0 ? "($".abs($balance).")" : '$'.$balance)}}</td>
+        @endif
         <td></td>
       </tr>
   </tbody>

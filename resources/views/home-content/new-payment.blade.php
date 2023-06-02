@@ -39,7 +39,7 @@ $route_prefix = "receivings.";
           @php
             $total += $vch->receiveable_amt;
           @endphp
-          <tr style="background-color:{{$loop->iteration%2 == 0 ? 'lightgrey' : '' }}">
+          <tr style="background-color:{{$loop->iteration%2 == 0 ? 'lightgrey' : '' }}" ondblclick="get_receiveable({{$vch->receiveable_amt}})">
             <td>{{$loop->iteration}}</td>
             <td>{{date('m-d-Y', strtotime($vch->date))}}</td>
             <td style="text-align:right;">{{$vch->id}}</td>
@@ -114,7 +114,7 @@ $route_prefix = "receivings.";
          </div>
          <section class="col col-md-8" style="{{!empty($r->id) && $r->pm->is_cash == 0 ? 'display:block;' : 'display:none' }}"  id="cheque_no">
            <label class="input">
-             <input type="text" class="form-control" name="cheque_no" placeholder="Bank/Cheque Number" value="{{!empty($r->id) ? $r->cheque_no : '' }}">
+             <input type="text" class="form-control" name="cheque_no" placeholder="Bank/Cheque/Money Order" value="{{!empty($r->id) ? $r->cheque_no : '' }}">
            </label>
          </section>
        </div>
@@ -146,7 +146,7 @@ $route_prefix = "receivings.";
          </section>
          <section class="col col-md-8">
            <label class="input">
-             <input type="number" step="any" class="form-control" style="color:green; font-size:25px;" onkeyup="check_pending_amount()" name="amount" value="{{!empty($r->id) ? $r->amount : ($rem_amt > 0 ? $rem_amt : '')}}">
+             <input type="number" step="any" class="form-control" style="color:green; font-size:25px;" onkeyup="check_pending_amount()" id="receiveable_amount" name="amount" value="{{!empty($r->id) ? $r->amount : ($rem_amt > 0 ? $rem_amt : '')}}">
            </label>
          </section>
        </div>
@@ -157,10 +157,23 @@ $route_prefix = "receivings.";
       <div class="row">
         <br>
         <input id="cell_number" type="text" class="form-control" name="" value="{{$cell_number}}" placeholder="No cell Number Found">
-        <textarea id="sms" name="name" rows="3" class="form-control">Message from Fifth Avenue Dalton. Payment of {{$last_amount}} usd received successfully. Your remaining Balance is {{$rem_amt <= 0 ? number_format(abs($rem_amt), 2) : '('.number_format($rem_amt,2).')'}}. Thank You</textarea>
+        <textarea id="sms" name="name" rows="3" class="form-control">Message from Fifth Avenue Dalton. Payment of {{$last_amount}} usd received successfully. Your {{$rem_amt <= 0 ? 'Credit' : 'Debit'}} Balance is {{$rem_amt <= 0 ? number_format(abs($rem_amt), 2) : '('.number_format($rem_amt,2).')'}}. Thank You</textarea>
         <button class="btn btn-primary btn-block" type="button"
         onclick="send_sms()"
         >Send SMS</button>
       </div>
   </section>
 </div>
+
+
+
+<script type="text/javascript">
+  function get_receiveable(amt)
+  {
+    if(amt > 0)
+    {
+      $("#receiveable_amount").val(amt);
+      check_pending_amount();
+    }
+  }
+</script>
